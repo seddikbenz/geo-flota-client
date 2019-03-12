@@ -1,0 +1,31 @@
+.company {
+  flex-direction: column;
+  padding: 10px;
+  form {
+    align-self: center;
+    padding: 20px;
+    width: 80%;
+    .required {
+      color: red;
+    }
+  }
+}
+
+.companies {
+  flex-direction: column;
+  .search{
+    paddin: 1px;
+    border: none;
+  }
+  h4 {
+    margin-left: 10px;
+  }
+  .form-control {
+    padding: 5px;
+  }
+  table {
+    .actions {
+      width: 64px;
+    }
+  }
+}
