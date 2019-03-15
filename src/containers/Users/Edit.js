@@ -69,7 +69,7 @@ class Edit extends Component {
             <input
               value={store.userStore.user.username}
               onChange={e =>
-                store.userStore.user.username = e.target.value.toUpperCase()
+                store.userStore.user.username = e.target.value
               }
               type="text"
               className="form-control"
@@ -134,7 +134,7 @@ class Edit extends Component {
             <input
               value={store.userStore.user.tel}
               onChange={e =>
-                store.userStore.user.tel = e.target.value.toUpperCase()
+                store.userStore.user.tel = e.target.value
               }
               type="text"
               className="form-control"
@@ -149,7 +149,7 @@ class Edit extends Component {
             <input
               value={store.userStore.user.job}
               onChange={e =>
-                store.userStore.user.job = e.target.value.toUpperCase()
+                store.userStore.user.job = e.target.value
               }
               type="text"
               className="form-control"

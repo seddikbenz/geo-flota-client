@@ -20,10 +20,11 @@ import Login from "./containers/Login";
 import Me from "./containers/Me";
 
 import store from "./stores";
-
 import "./app.scss";
 
 import Spinner from "./components/Spinner";
+
+window.store = store
 
 class App extends Component {
   componentWillMount() {

@@ -80,9 +80,12 @@ class All extends Component {
                         className={`btn btn-default ${this.props.location.pathname === '/cars/edit' ? 'active' : ''}`}>
                     <span className="icon icon-pencil"></span>
                   </Link>
-                  <button onClick={()=>this.delete(car.id)} className="btn btn-default">
-                    <span className="icon icon-trash"></span>
-                  </button>
+                  {
+                    store.userStore.currentUser.role === 'superadmin' &&
+                    <button onClick={()=>this.delete(car.id)} className="btn btn-default">
+                      <span className="icon icon-trash"></span>
+                    </button>
+                  }
                 </td>
               </tr>
             ))}

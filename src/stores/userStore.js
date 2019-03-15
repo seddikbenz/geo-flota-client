@@ -1,6 +1,7 @@
 import {observable, action, decorate} from "mobx";
 
 import agent from "../agent";
+import { toast } from 'react-toastify';
 
 class UserStore {
   currentUser = {
@@ -68,11 +69,7 @@ class UserStore {
           error.response !== undefined
             ? error.response.data.message
             : error.message;
-        this.showMessage({
-          type: 'error',
-          body: body,
-          show: true
-        })
+        toast.error(body)
       })
       .finally(
         action(() => {
@@ -89,11 +86,7 @@ class UserStore {
       })
       .then(
         action(data => {
-          this.showMessage({
-            type: 'success',
-            body: data.message,
-            show: true
-          })
+          toast.success(data.message)
         })
       )
       .catch(error => {
@@ -101,11 +94,7 @@ class UserStore {
           error.response !== undefined
             ? error.response.data.message
             : error.message;
-        this.showMessage({
-          type: 'error',
-          body: body,
-          show: true
-        })
+        toast.error('Error verify your input data')
       })
       .finally(
         action(() => {
@@ -170,11 +159,7 @@ class UserStore {
       })
       .then(
         action(data => {
-          this.showMessage({
-            type: 'success',
-            body: data.message,
-            show: true
-          })
+          toast.success(data.message)
         })
       )
       .catch(error => {
@@ -182,11 +167,7 @@ class UserStore {
           error.response !== undefined
             ? error.response.data.message
             : error.message;
-        this.showMessage({
-          type: 'error',
-          body: body,
-          show: true
-        })
+        toast.error(body)
       })
       .finally(action(() => this.getAll()));
   }
@@ -199,11 +180,7 @@ class UserStore {
       })
       .then(
         action(data => {
-          this.showMessage({
-            type: 'success',
-            body: data.message,
-            show: true
-          })
+          toast.success(data.message)
         })
       )
       .catch(error => {
@@ -211,11 +188,7 @@ class UserStore {
           error.response !== undefined
             ? error.response.data.message
             : error.message;
-        this.showMessage({
-          type: 'error',
-          body: body,
-          show: true
-        })
+        toast.error('Error verify your input data')
       })
       .finally(
         action(() => {

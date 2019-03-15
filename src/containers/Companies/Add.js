@@ -38,7 +38,7 @@ class Add extends Component {
             <input
               value={store.companyStore.company.name}
               onChange={e =>
-                (store.companyStore.company.name = e.target.value.toUpperCase())
+                (store.companyStore.company.name = e.target.value)
               }
               type="text"
               className="form-control"

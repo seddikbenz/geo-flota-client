@@ -42,7 +42,7 @@ class Edit extends Component {
               Company name <span className="required">*</span>
             </label>
             <input
-              onChange={e => store.companyStore.company.name = e.target.value.toUpperCase()}
+              onChange={e => store.companyStore.company.name = e.target.value}
               value={store.companyStore.company.name}
               type="text"
               className="form-control"

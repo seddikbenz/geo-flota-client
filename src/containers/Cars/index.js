@@ -3,7 +3,6 @@ import { observer } from "mobx-react";
 import { Link, Route } from "react-router-dom";
 
 import store from "../../stores";
-import Message from '../../components/Message'
 
 import "./style.scss";
 
@@ -26,10 +25,6 @@ class Cars extends Component {
   render() {
     return (
       <div className="window">
-        <Message
-          message={store.carStore.message}
-          hideMessage={()=>store.carStore.hideMessage()}
-        />
         <header className="toolbar toolbar-header">
           <h1 className="title"> {this.getTitle()} </h1>
           <div className="toolbar-actions">
