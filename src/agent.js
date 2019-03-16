@@ -33,7 +33,9 @@ const Company = {
 
 const Car = {
   getCar: (id) => requests.get('/cars/' + id),
+  getCarLastPosition: (id) => requests.get('/cars/' + id + '/lastposition'),
   all: () => requests.get('/cars'),
+  getCarsLastPosition: () => requests.get('/cars/lastposition'),
   create: (car) => requests.post('/cars', {...car}),
   delete: (id) => requests.delete('/cars/' + id),
   update: (car) => requests.put('/cars/' + car.id, {...car})

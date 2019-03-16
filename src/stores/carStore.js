@@ -58,6 +58,35 @@ class carStore {
       );
   }
 
+  getCarLastPosition(id) {
+    this.loading = true;
+    return agent.Car.getCarLastPosition(id)
+      .then(response => {
+        return response.data;
+      })
+      .then(
+        action(data => {
+          this.car = data.data
+        })
+      )
+      .catch(error => {
+        let body =
+          error.response !== undefined
+            ? error.response.data.message
+            : error.message;
+        this.showMessage({
+          type: 'error',
+          body: body,
+          show: true
+        })
+      })
+      .finally(
+        action(() => {
+          this.loading = false;
+        })
+      );
+  }
+
   getAll() {
     this.loading = true;
     return agent.Car.all()
@@ -163,7 +192,7 @@ class carStore {
 carStore = decorate(carStore, {
   selectedIndex: observable,
   car: observable,
-  s: observable,
+  cars: observable,
   loading: observable,
   message: observable,
 });
