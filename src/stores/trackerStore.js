@@ -135,6 +135,31 @@ class trackerStore {
         })
       );
   }
+
+  ping(id, position) {
+    //this.loading = true;
+    return agent.Tracker.ping(id, position)
+      .then(response => {
+        return response.data;
+      })
+      .then(
+        action(data => {
+          //this.tracker = data.data
+        })
+      )
+      .catch(error => {
+        let body =
+          error.response !== undefined
+            ? error.response.data.message
+            : error.message;
+        toast.error(body)
+      })
+      .finally(
+        action(() => {
+          //this.loading = false;
+        })
+      );
+  }
 }
 
 trackerStore = decorate(trackerStore, {

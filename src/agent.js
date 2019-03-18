@@ -46,7 +46,8 @@ const Tracker = {
   all: () => requests.get('/trackers'),
   create: (tracker) => requests.post('/trackers', {...tracker}),
   delete: (id) => requests.delete('/trackers/' + id),
-  update: (tracker) => requests.put('/trackers/' + tracker.id, {...tracker})
+  update: (tracker) => requests.put('/trackers/' + tracker.id, {...tracker}),
+  ping: (id, position) => requests.get('/trackers/' + id + '/ping', {params: position})
 };
 
 
