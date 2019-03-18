@@ -30,6 +30,7 @@ class All extends Component {
     if (e.keyCode === 40) {
       store.companyStore.selectedIndex = Math.abs((store.companyStore.selectedIndex + 1) % (store.companyStore.companies.length))
     }
+    console.log('key')
   }
 
   delete(id) {

@@ -5,6 +5,7 @@ class CommonStore {
   token = window.localStorage.getItem('jwt');
   appLoaded = false;
   history
+  hideSidebar = false
   constructor() {
     reaction(
       () => this.token,
@@ -33,6 +34,7 @@ class CommonStore {
 
 CommonStore = decorate(CommonStore, {
   appName: observable,
+  hideSidebar: observable,
   version: observable,
   token: observable,
   appLoaded: observable,

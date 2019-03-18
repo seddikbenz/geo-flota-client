@@ -25,35 +25,50 @@ class Map extends React.Component {
     this.state = {
       lat:36.08,
       lng:4.76,
-      zoom: 13
+      zoom: 11
     }
+    this.updateCarsLastPositionIntervalID = 0;
   }
   componentDidMount(){
     store.mapStore.getCarsLastPosition()
+    this.updateCarsLastPositionIntervalID = setInterval(this.updateCarsLastPosition, 60000)
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.updateCarsLastPositionIntervalID)
+  }
+
+  updateCarsLastPosition(){
+    store.mapStore.updateCarsLastPosition()
   }
 
   render() {
     if(store.mapStore.loading){
       return (
-        <div className="window-content center">
-          <Spinner/>
+        <div className="window">
+          <div className="window-content center">
+            <Spinner/>
+          </div>
         </div>
       )
     }
     const position = [this.state.lat, this.state.lng];
     return (
-      <LeafletMap style={{width: '100%', height: '100%'}} center={position} zoom={6}>
+      <LeafletMap style={{width: '100%', height: '100%'}} center={{
+        lat:30.08,
+        lng:4.76
+      }} zoom={5}>
         <LayersControl position="topright">
-          <BaseLayer name="GoogleMap.Road">
-            <TileLayer
-              attribution='&copy; <a href="http://maps.google.com">google maps road</a>'
-              url={googleRoad}
-            />
-          </BaseLayer>
           <BaseLayer checked name="OpenStreetMap">
             <TileLayer
               attribution='&amp;copy <a href="http://osm.org">OpenStreetMap</a>'
               url={osm}
+            />
+          </BaseLayer>
+          <BaseLayer name="GoogleMap.Road">
+            <TileLayer
+              attribution='&copy; <a href="http://maps.google.com">google maps road</a>'
+              url={googleRoad}
             />
           </BaseLayer>
           <BaseLayer name="GoogleMap.Satelite">
@@ -70,11 +85,12 @@ class Map extends React.Component {
                 <Marker key={index} position={{
                   lat: car.positions[0].lat,
                   lng: car.positions[0].lng,
-                  zoom: 13
                 }}>
                   <Popup>
-                    <b>Numberplate</b> {car.numberplate}
-                    <br/> <b>Code</b> {car.code}
+                    <b>Numberplate:</b> {car.numberplate}
+                    <br/> <b>Code:</b> {car.code}
+                    <br/> <b>speed:</b> {car.speed ? car.speed : 0 }  km/h
+                    <b>, State:</b> {car.state ? car.state : 'off' }
                     <br/> <b>Lat:</b> {car.positions[0].lat}
                     <br/> <b>Lng:</b> {car.positions[0].lng}
                   </Popup>

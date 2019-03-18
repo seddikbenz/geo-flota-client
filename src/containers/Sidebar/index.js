@@ -7,7 +7,7 @@ import store from "../../stores";
 class Sidebar extends Component{
   render(){
     return(
-      <div className="pane pane-sm sidebar">
+      <div className={`pane pane-sm sidebar ${store.commonStore.hideSidebar ? 'hide' : ''}`}>
         <nav className="nav-group">
           <h5 className="nav-group-title">Feutures</h5>
           <Link to={'/'} className={`nav-group-item ${this.props.location.pathname === '/' ? 'active':''}`}>
