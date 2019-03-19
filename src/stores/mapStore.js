@@ -6,6 +6,7 @@ import {toast} from 'react-toastify';
 class mapStore {
   cars = [];
   loading = false;
+  selectedIndex
   getCarsLastPosition() {
     this.loading = true;
     return agent.Car.getCarsLastPosition()
@@ -57,6 +58,7 @@ class mapStore {
 
 mapStore = decorate(mapStore, {
   cars: observable,
+  selectedIndex: observable,
   loading: observable,
 });
 
