@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react'
 import {Link} from 'react-router-dom'
-
+import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
 import store from '../../stores'
 
 import './style.scss'
@@ -53,41 +53,29 @@ class All extends Component {
     }
     return (
       <div className="map-cars">
-        <input autoFocus={true} placeholder='Search car' className='form-control search' type="text"/>
-        <table className="table-striped">
-          <thead>
-          <tr>
-            <th>index</th>
-            <th>numberplate</th>
-            <th>Code</th>
-            <th>GPS code</th>
-            <th className='actions'>Actions</th>
-          </tr>
-          </thead>
-          <tbody>
-          {store.mapStore.cars.map((car, index) => (
-            <tr onClick={() => store.mapStore.selectedIndex = car.id} key={car.id}
-                className={store.mapStore.selectedIndex === car.id ? 'active' : ''}>
-              <td> {index + 1} </td>
-              <td>{car.numberplate}</td>
-              <td>{car.code}</td>
-              <td>{car.gps_code}</td>
-              <td className='actions'>
-                <Link to={'/cars/edit/' + car.id}
-                      className={'btn btn-default'}>
-                  <span className="icon icon-pencil"></span>
-                </Link>
-                {
-                  store.userStore.currentUser.role === 'superadmin' &&
-                  <button onClick={() => this.delete(car.id)} className="btn btn-default">
-                    <span className="icon icon-trash"></span>
-                  </button>
-                }
-              </td>
-            </tr>
-          ))}
-          </tbody>
-        </table>
+        <ul className="list-group">
+          <li className="list-group-header">
+            <input onFocus={()=>store.mapStore.showListCars = true} className="form-control" type="text" placeholder="Search for car" />
+          </li>
+          { store.mapStore.showListCars &&
+            store.mapStore.cars.map((car, index) => (
+              <li
+                onClick={() => {
+                  if(car.positions.length !=0){
+                    store.mapStore.zoomTo(car.id, car.positions[0])
+                  }}}
+                key={index}
+                className={store.mapStore.selectedIndex === car.id ? 'list-group-item active' : 'list-group-item'}
+              >
+                <div className="media-body">
+                  <strong>{car.code}</strong>
+                  <p>{car.numberplate} </p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+
       </div>
     )
   }

@@ -5,10 +5,19 @@
   height: 100%;
 }
 
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
 .map-cars{
   position: absolute;
-  width: 100%;
+  width: 250px;
   z-index: 1000;
   max-height: 250px;
-  bottom:0px;
+  top:5px;
+  left: 5px;
+  background-color: white;
+  border-radius: 5px;
+  max-height: 400px;
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {autorun} from 'mobx'
 import {observer} from 'mobx-react'
 import  {
   Map as LeafletMap,
@@ -9,7 +10,7 @@ import  {
 } from 'react-leaflet'
 
 import Spinner from '../../components/Spinner'
-import {BlueMarker, GreenMarker} from '../../components/IconsMarker'
+import {BlueMarker, GreenMarker, RedMarker, YellowMarker, GrayMarker} from '../../components/IconsMarker'
 
 
 import store from '../../stores'
@@ -42,10 +43,25 @@ class Map extends React.Component {
     clearInterval(this.updateCarsLastPositionIntervalID)
   }
 
+  zoomOut(){
+    const map = store.mapStore.mapRef.current;
+    if (map != null) {
+      map.leafletElement.zoomOut();
+    }
+  };
+
   updateCarsLastPosition(){
     store.mapStore.updateCarsLastPosition()
   }
-
+  renderIconMarker(car){
+    if(store.mapStore.selectedIndex === car.id){
+      return GreenMarker
+    }
+    if(car.state === "on" && car.speed !== "0" ){
+      return GreenMarker
+    }
+    return BlueMarker
+  }
   render() {
     if(store.mapStore.loading){
       return (
@@ -59,10 +75,15 @@ class Map extends React.Component {
     const position = [this.state.lat, this.state.lng];
     return (
       <div className='map' >
-        <LeafletMap style={{width: '100%', height: '100%'}} center={{
-          lat:30.08,
-          lng:4.76
-        }} zoom={5}>
+        <LeafletMap
+          animate={true}
+          zoomControl={false}
+          onContextmenu={() => this.zoomOut()}
+          ref={store.mapStore.mapRef}
+          center={store.mapStore.mapCenter}
+          zoom={store.mapStore.mapZoom}
+          onClick={() => store.mapStore.showListCars = false}
+        >
           <LayersControl position="topright">
             <BaseLayer checked name="OpenStreetMap">
               <TileLayer
@@ -94,7 +115,7 @@ class Map extends React.Component {
                       lat: car.positions[0].lat,
                       lng: car.positions[0].lng,
                     }}
-                    icon={store.mapStore.selectedIndex === car.id ? BlueMarker:GreenMarker}
+                    icon={this.renderIconMarker(car)}
                   >
                     <Popup>
                       <b>Numberplate:</b> {car.numberplate}
